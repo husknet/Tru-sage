@@ -173,7 +173,7 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
       <div className="circuit-board absolute inset-0 z-0 opacity-50"></div>
       
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 20 }
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md z-10"
@@ -190,26 +190,43 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                 </div>
               </div>
               
-              {/* PDF Logo with Secure Login Text */}
+              {/* Modern Logo with Secure Login Text */}
               <div className="flex flex-col items-center justify-center mb-2">
-                <svg width="180" height="50" viewBox="0 0 180 50" className="mb-2">
+                <svg width="200" height="60" viewBox="0 0 200 60" className="mb-2">
                   <defs>
                     <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#ffffff" />
                       <stop offset="100%" stopColor="#e6f7ff" />
                     </linearGradient>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+                      <feOffset dx="0" dy="2" result="offsetblur"/>
+                      <feFlood floodColor="rgba(0,0,0,0.3)"/>
+                      <feComposite in2="offsetblur" operator="in"/>
+                      <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
                   </defs>
                   
-                  {/* PDF Icon */}
-                  <g transform="translate(0, 5)">
-                    <rect x="5" y="5" width="30" height="40" rx="3" fill="#e62e2e" />
-                    <text x="20" y="28" textAnchor="middle" fill="white" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="16">PDF</text>
+                  {/* Modern Document Icon */}
+                  <g transform="translate(10, 5)" filter="url(#shadow)">
+                    <path d="M15,5 L15,35 L35,35 L35,15 L25,15 L25,5 L15,5 Z" fill="#ffffff" stroke="#ffffff" strokeWidth="1.5" />
+                    <path d="M25,15 L35,15 L25,5 Z" fill="#e6f7ff" />
+                    <text x="25" y="25" textAnchor="middle" fill="#1e40af" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="10">PDF</text>
                   </g>
                   
                   {/* Secure Login Text */}
-                  <g transform="translate(45, 0)">
-                    <text x="40" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontSize="20">Secure Login</text>
+                  <g transform="translate(55, 0)">
+                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" fontWeight="600" fontSize="20" letterSpacing="0.5px">Tru</text>
+                    <text x="45" y="25" fill="url(#textGradient)" fontFamily="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" fontSize="20" letterSpacing="0.5px">Secure Login</text>
                   </g>
+                  
+                  {/* Decorative elements */}
+                  <circle cx="180" cy="15" r="3" fill="#ffffff" opacity="0.8" />
+                  <circle cx="185" cy="25" r="2" fill="#ffffff" opacity="0.6" />
+                  <circle cx="175" cy="35" r="2" fill="#ffffff" opacity="0.7" />
                 </svg>
                 
                 <p className="text-blue-100 mt-2 text-sm">Verify your email access to continue</p>
@@ -337,4 +354,3 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
 };
 
 export default LoginPage;
-
