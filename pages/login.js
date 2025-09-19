@@ -208,7 +208,6 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                   
                   {/* Secure Login Text */}
                   <g transform="translate(45, 0)">
-                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20">Tru</text>
                     <text x="40" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontSize="20">Secure Login</text>
                   </g>
                 </svg>
@@ -338,3 +337,4 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
 };
 
 export default LoginPage;
+
